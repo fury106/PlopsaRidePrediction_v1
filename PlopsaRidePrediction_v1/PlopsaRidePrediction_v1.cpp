@@ -111,6 +111,11 @@ double probabilityMorning(vector<int> inputdata) { // function that calculates t
     vector<int>input = { temperatureRound, temperatureRound,inputdata[2] };
     bool isMorning = true;
     double morningProbability = probability(input, isMorning);
+
+    if (temperature < 6) {
+        morningProbability = round(morningProbability * 0.9); // real life experience shows a smaller chance for opening if T < 6°C
+    }
+
     if (morningProbability < 1) {
         morningProbability = 1;
     }
