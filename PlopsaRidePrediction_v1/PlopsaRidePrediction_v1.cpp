@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <Windows.h>
 
 using namespace std;
 
@@ -124,8 +125,9 @@ double probabilityMorning(vector<int> inputdata) { // function that calculates t
 
 int main()
 {
+    SetConsoleTitleA("Plopsa Ride Prediction v1.0.3"); // adds title to progrem window ALWAYS UPDATE VERSION AFTER MODIFICATION!
     // introduction at start
-    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.0.1.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
+    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.0.3.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
     cout << "Dit programma probeert te voorspellen hoe groot de kans is dat de grote attracties \n";
     cout << "zoals 'The Ride to Happiness' en 'Anubis The Ride' geopend zullen zijn tijdens uw bezoek.\n";
     cout << "\n";
