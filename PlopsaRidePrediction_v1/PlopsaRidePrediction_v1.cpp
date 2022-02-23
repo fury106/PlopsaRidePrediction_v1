@@ -125,9 +125,9 @@ double probabilityMorning(vector<int> inputdata) { // function that calculates t
 
 int main()
 {
-    SetConsoleTitleA("Plopsa Ride Prediction v1.0.3"); // adds title to program window ALWAYS UPDATE VERSION AFTER MODIFICATION!
+    SetConsoleTitleA("Plopsa Ride Prediction v1.0.4"); // adds title to program window ALWAYS UPDATE VERSION AFTER MODIFICATION!
     // introduction at start
-    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.0.3.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
+    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.0.4.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
     cout << "Dit programma probeert te voorspellen hoe groot de kans is dat de grote attracties \n";
     cout << "zoals 'The Ride to Happiness' en 'Anubis The Ride' geopend zullen zijn tijdens uw bezoek.\n";
     cout << "\n";
@@ -192,6 +192,7 @@ int main()
     double waarschijnlijkheidOchtend = probabilityMorning(data);
     cout << "Je hebt " << waarschijnlijkheid << " procent kans dat de attracties gedurende de dag zullen openenen.\n";
     cout << "De kans dat de attracties openen bij parkopening bedraagt " << waarschijnlijkheidOchtend << " procent.\n";
+    cout << "De kans dat 'The Ride to Happiness' opent bedraagt 0 procent.\n";
     cout << "\n";
     cout << "Druk op een willekeurige toets om af te sluiten...\n";
     system("pause");
