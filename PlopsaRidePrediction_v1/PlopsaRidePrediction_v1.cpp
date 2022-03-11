@@ -36,7 +36,7 @@ double probability(vector<int> inputdata, bool morning) { // this function calcu
     double probabilityOpen;
 
     //find influence of temperature
-    if (Tmin > 6) {
+    if (Tmin > 7) {
         temperatureFactor = 0.99;
     } else {
         // update v1.0.1: no longer use Tmax, instead use T at 1 hour before Tmax would be reached
@@ -103,7 +103,85 @@ double probability(vector<int> inputdata, bool morning) { // this function calcu
     return probabilityOpen;
 }
 
-double probabilityMorning(vector<int> inputdata) { // function that calculates the probability around opening time
+double probabilityRTH(vector<int> inputdata, bool morning) { // this function calculates the actual probability of RTH, REWRITE MORE EFFICIENT
+    int Tmin = inputdata[0];
+    double Tmax = inputdata[1];
+    int wind = inputdata[2];
+    double temperatureFactor;
+    double windFactor;
+    double probabilityOpen;
+
+    //find influence of temperature
+    if (Tmin > 8) {
+        temperatureFactor = 0.99;
+    }
+    else {
+        // update v1.0.1: no longer use Tmax, instead use T at 1 hour before Tmax would be reached
+        if (Tmax < 8 && morning == false) {
+            double temperature;
+            temperature = (Tmax - Tmin) / 7 * 6 + Tmin;
+            Tmax = temperature;
+            //cout << temperature << "\n";
+        }
+
+        if (Tmax < 6) {
+
+            temperatureFactor = -1 * pow((6 - Tmax), 0.33) * 0.25 + 0.6; // pow cannot handle negative numbers
+        }
+        else {
+            temperatureFactor = pow((Tmax - 6), 0.33) * 0.25 + 0.6;
+        }
+
+        if (Tmax < 6) {
+            temperatureFactor = temperatureFactor / (6 - Tmax);
+        }
+
+        if (temperatureFactor > 0.99) {
+            temperatureFactor = 0.99;
+        }
+
+        if (temperatureFactor < 0.01) {
+            temperatureFactor = 0.01;
+        }
+    }
+    //cout << "Invloed temperatuur: " << temperatureFactor << "\n";
+
+    // find windfactor    
+    if (wind > 7) {
+        windFactor = 0.01;
+    }
+    else
+    {
+        double windMatrix[2][8]; //define and fill windmatrix
+        for (int i = 0;i < 8;i++) {
+            windMatrix[0][i] = i;
+        }
+
+        for (int i = 0; i < 3; i++) {
+            windMatrix[1][i] = 0.99;
+        }
+
+        windMatrix[1][3] = 0.95;
+        windMatrix[1][4] = 0.90;
+        windMatrix[1][5] = 0.60;
+        windMatrix[1][6] = 0.30;
+        windMatrix[1][7] = 0.10;
+
+        windFactor = windMatrix[1][wind];
+    }
+
+    //cout << "Invloed wind: " << windFactor << "\n";
+
+    probabilityOpen = temperatureFactor * windFactor;
+    probabilityOpen = round(probabilityOpen * 100);
+    if (probabilityOpen < 1) {
+        probabilityOpen = 1;
+    }
+
+    return probabilityOpen;
+}
+
+double probabilityMorning(vector<int> inputdata, bool isRTH) { // function that calculates the probability around opening time
     double Tmin = inputdata[0];
     double Tmax = inputdata[1];
     double temperature;
@@ -111,7 +189,15 @@ double probabilityMorning(vector<int> inputdata) { // function that calculates t
     int temperatureRound = round(temperature);
     vector<int>input = { temperatureRound, temperatureRound,inputdata[2] };
     bool isMorning = true;
-    double morningProbability = probability(input, isMorning);
+    double morningProbability;
+
+    if (isRTH == true) {
+        morningProbability = probabilityRTH(input, isMorning);
+    }
+    else {
+        morningProbability = probability(input, isMorning);
+    }
+
 
     if (temperature < 6) {
         morningProbability = round(morningProbability * 0.9); // real life experience shows a smaller chance for opening if T < 6°C
@@ -125,9 +211,9 @@ double probabilityMorning(vector<int> inputdata) { // function that calculates t
 
 int main()
 {
-    SetConsoleTitleA("Plopsa Ride Prediction v1.0.4"); // adds title to program window ALWAYS UPDATE VERSION AFTER MODIFICATION!
+    SetConsoleTitleA("Plopsa Ride Prediction v1.0.5"); // adds title to program window ALWAYS UPDATE VERSION AFTER MODIFICATION!
     // introduction at start
-    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.0.4.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
+    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.0.5.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
     cout << "Dit programma probeert te voorspellen hoe groot de kans is dat de grote attracties \n";
     cout << "zoals 'The Ride to Happiness' en 'Anubis The Ride' geopend zullen zijn tijdens uw bezoek.\n";
     cout << "\n";
@@ -189,10 +275,11 @@ int main()
     double waarschijnlijkheid;
     bool ochtend = false;
     waarschijnlijkheid = probability(data, ochtend);
-    double waarschijnlijkheidOchtend = probabilityMorning(data);
+    double waarschijnlijkheidOchtend = probabilityMorning(data, false);
     cout << "Je hebt " << waarschijnlijkheid << " procent kans dat de attracties gedurende de dag zullen openenen.\n";
     cout << "De kans dat de attracties openen bij parkopening bedraagt " << waarschijnlijkheidOchtend << " procent.\n";
-    cout << "De kans dat 'The Ride to Happiness' opent bedraagt 0 procent.\n";
+    cout << "De kans dat 'The Ride to Happiness' gedurende de dag opent bedraagt " << probabilityRTH(data, false) << " procent,\n";
+    cout << "en de kans dat deze bij parkopening opent bedraagt " << probabilityMorning(data, true) << " procent.\n";
     cout << "\n";
     cout << "Druk op een willekeurige toets om af te sluiten...\n";
     system("pause");
