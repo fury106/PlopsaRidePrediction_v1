@@ -83,11 +83,11 @@ double probability(vector<int> inputdata, bool morning) { // this function calcu
             windMatrix[1][i] = 0.99;
         }
 
-        windMatrix[1][3] = 0.95;
-        windMatrix[1][4] = 0.90;
-        windMatrix[1][5] = 0.60;
-        windMatrix[1][6] = 0.30;
-        windMatrix[1][7] = 0.10;
+        windMatrix[1][3] = 0.90;
+        windMatrix[1][4] = 0.80;
+        windMatrix[1][5] = 0.50;
+        windMatrix[1][6] = 0.25;
+        windMatrix[1][7] = 0.05;
 
         windFactor = windMatrix[1][wind];
     }
@@ -161,11 +161,11 @@ double probabilityRTH(vector<int> inputdata, bool morning) { // this function ca
             windMatrix[1][i] = 0.99;
         }
 
-        windMatrix[1][3] = 0.95;
-        windMatrix[1][4] = 0.90;
-        windMatrix[1][5] = 0.60;
-        windMatrix[1][6] = 0.30;
-        windMatrix[1][7] = 0.10;
+        windMatrix[1][3] = 0.90;
+        windMatrix[1][4] = 0.80;
+        windMatrix[1][5] = 0.50;
+        windMatrix[1][6] = 0.25;
+        windMatrix[1][7] = 0.05;
 
         windFactor = windMatrix[1][wind];
     }
@@ -211,9 +211,9 @@ double probabilityMorning(vector<int> inputdata, bool isRTH) { // function that 
 
 int main()
 {
-    SetConsoleTitleA("Plopsa Ride Prediction v1.0.5"); // adds title to program window ALWAYS UPDATE VERSION AFTER MODIFICATION!
+    SetConsoleTitleA("Plopsa Ride Prediction v1.0.6"); // adds title to program window ALWAYS UPDATE VERSION AFTER MODIFICATION!
     // introduction at start
-    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.0.5.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
+    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.0.6.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
     cout << "Dit programma probeert te voorspellen hoe groot de kans is dat de grote attracties \n";
     cout << "zoals 'The Ride to Happiness' en 'Anubis The Ride' geopend zullen zijn tijdens uw bezoek.\n";
     cout << "\n";
