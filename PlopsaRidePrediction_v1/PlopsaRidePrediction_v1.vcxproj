@@ -140,6 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="PlopsaRidePrediction_v1.cpp" />
+    <ClCompile Include="Ride.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Ride.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
