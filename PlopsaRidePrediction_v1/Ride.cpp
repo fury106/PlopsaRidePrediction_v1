@@ -12,7 +12,7 @@ Ride::Ride(string name, int tMin, int windMax, vector<int> weather) {
 void Ride::SetData(string name, int tMin, int windMax, vector<int> weather) {
 	rideName = name;
 	minTemp = tMin;
-	maxWind = maxWind;
+	maxWind = windMax;
 	lowTemp = weather[0];
 	highTemp = weather[1];
 	wind = weather[2];
@@ -24,11 +24,13 @@ void Ride::PredictRide() {
 	double probablilityMorning = CalculateProbability(true);
 
 	if (getRideName() == "other rides") {
+		cout << "\n";
 		cout << "De kans dat de andere atracties openen bedraagt " << probability << " procent.\n";
 		cout << "De kans dat deze bij parkopening openen bedraagt " << probablilityMorning << " procent.\n";
 		return;
 	}
 
+	cout << "\n";
 	cout << "Je hebt " << probability << " procent kans dat " << getRideName() << " zal openen.\n";
 	cout << "De kans dat deze attractie opent bij parkopening bedraagt " << probablilityMorning << " procent.\n";
 
@@ -39,6 +41,7 @@ double Ride::CalculateProbability(bool isMorning) {
 	int lowestTemperature = getLowTemp();
 	double highestTemperature = getHighTemp();
 	int windForce = getWind();
+	int maximumWind = getMaxWind();
 	int minimumTemperature = getMinTemp();
 	double temperatureFactor;
 	double windFactor;
@@ -99,6 +102,13 @@ double Ride::CalculateProbability(bool isMorning) {
 	else
 	{
 		windFactor = windMatrix[1][windForce];
+
+		if (windForce == maximumWind) {
+			windFactor = windFactor * 0.925;
+		}
+		else if (windForce > maximumWind) {
+			windFactor = windFactor * 0.5;
+		}
 	}
 
 	probabilityOpen = temperatureFactor * windFactor;

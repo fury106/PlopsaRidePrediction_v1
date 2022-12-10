@@ -31,9 +31,9 @@ vector<int> getNewInput() { // this function asks for new weather conditions if 
 
 int main()
 {
-    SetConsoleTitleA("Plopsa Ride Prediction v1.1.0"); // adds title to program window ALWAYS UPDATE VERSION AFTER MODIFICATION!
+    SetConsoleTitleA("Plopsa Ride Prediction v1.1.1"); // adds title to program window ALWAYS UPDATE VERSION AFTER MODIFICATION!
     // introduction at start
-    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.1.0.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
+    cout << "Welkom bij de Plopsa Ride Prediction app versie 1.1.1.\n"; // ALWAYS UPDATE VERSION AFTER MODIFICATION!
     cout << "Dit programma probeert te voorspellen hoe groot de kans is dat de grote attracties \n";
     cout << "zoals 'The Ride to Happiness' en 'Anubis The Ride' geopend zullen zijn tijdens uw bezoek.\n";
     cout << "\n";
@@ -94,6 +94,8 @@ int main()
     vector<int> data = { Tmin, Tmax, windkracht };
 
     Ride rth("Ride to Happiness", 6, 4, data);
+    Ride anubis("Anubis: The Ride", 5, 4, data);
+    Ride nachtwacht("Nachtwacht Flyer", 5, 3, data);
     Ride rest("other rides", 5, 7, data);
 
     // end program
